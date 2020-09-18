@@ -4,7 +4,7 @@ class Day extends React.Component{
     state={
         data:[],
         note:'',
-           date:'',
+        date:'',
     }
     componentDidMount(){
         fetch('http://localhost:3000/day')
@@ -42,9 +42,20 @@ class Day extends React.Component{
         })
         .catch((error)=>console.log(error))
     }
+
+    deleteItem=(id, index)=>{
+        fetch('http://localhost:3000/day/'+id,{
+            method:'DELETE'
+        })
+        .then((data)=>{
+            this.setState({
+                data:[...this.state.data.slice(0, index), ...this.state.data.slice(index+1)]
+            })
+        })
+    }
     render(){
 
-        
+
         return(
             <div>
                 <form onSubmit={this.handleSubmit} id={this.state.data._id}>
@@ -53,11 +64,12 @@ class Day extends React.Component{
                     <input type='submit' />
 
                 </form>
-            {this.state.data.map(el=>{
+            {this.state.data.map((el,index)=>{
                 return (
                     <div key={el._id}>
                     <h1>{el.note}</h1>
                     <h2>{el.date}</h2>
+                    <button onClick={()=>this.deleteItem(el._id, index)}>Delete</button>
                     </div>
                 )
             })}
