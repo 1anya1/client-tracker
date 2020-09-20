@@ -70,6 +70,7 @@ class Day extends React.Component{
                     <h1>{el.note}</h1>
                     <h2>{el.date}</h2>
                     <button onClick={()=>this.deleteItem(el._id, index)}>Delete</button>
+                    <button>View Activity </button>
                     </div>
                 )
             })}
